@@ -13,13 +13,16 @@ import java.util.Objects;
 public class Goal implements Serializable {
     private final @Nullable String name;
     private final @NotNull Integer id;
+    private @NotNull boolean isFinished = false;
 
     public Goal(
         @Nullable String name,
-        @NotNull Integer id
+        @NotNull Integer id,
+        @NotNull boolean isFinished
     ) {
         this.name = name;
         this.id = id;
+        this.isFinished = isFinished;
     }
 
     @Nullable
