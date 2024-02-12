@@ -6,9 +6,9 @@ import org.junit.Test;
 
 public class GoalTest {
 
-    Goal testGoal1 = new Goal("testGoal", 0); // first test
-    Goal testGoal2 = new Goal(" ", 1000000000); // string with only 1 space and a large enough id
-    Goal testGoal3 = new Goal("", 10); // string with only an empty string
+    Goal testGoal1 = new Goal("testGoal", 0, false); // first test
+    Goal testGoal2 = new Goal(" ", 1000000000, true); // string with only 1 space and a large enough id
+    Goal testGoal3 = new Goal("", 10, false); // string with only an empty string
 
     @Test
     public void getName() {
@@ -22,5 +22,12 @@ public class GoalTest {
         assertEquals(testGoal1.getId(), (Integer) 0);
         assertEquals(testGoal2.getId(),(Integer) 1000000000);
         assertEquals(testGoal3.getId(), (Integer) 10);
+    }
+
+    @Test
+    public void isFinished() {
+        assertEquals(testGoal1.isFinished(), false);
+        assertEquals(testGoal2.isFinished(),true);
+        assertEquals(testGoal3.isFinished(), false);
     }
 }

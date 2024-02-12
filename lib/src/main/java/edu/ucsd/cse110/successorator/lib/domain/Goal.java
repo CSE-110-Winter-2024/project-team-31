@@ -5,20 +5,16 @@ import androidx.annotation.Nullable;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.Serializable;
-import java.util.Objects;
 
-/**
- * Just a dummy domain model that does nothing in particular. Delete me.
- */
 public class Goal implements Serializable {
     private final @Nullable String name;
     private final @NotNull Integer id;
-    private @NotNull boolean isFinished = false;
+    private boolean isFinished = false;
 
     public Goal(
         @Nullable String name,
         @NotNull Integer id,
-        @NotNull boolean isFinished
+        boolean isFinished
     ) {
         this.name = name;
         this.id = id;
@@ -28,6 +24,11 @@ public class Goal implements Serializable {
     @Nullable
     public String getName() {
         return name;
+    }
+
+    @NotNull
+    public Boolean isFinished() {
+        return isFinished;
     }
 
     @NotNull
