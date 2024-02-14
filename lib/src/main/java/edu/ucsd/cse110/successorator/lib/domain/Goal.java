@@ -1,18 +1,17 @@
 package edu.ucsd.cse110.successorator.lib.domain;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-
-import org.jetbrains.annotations.NotNull;
 
 import java.io.Serializable;
 
 public class Goal implements Serializable {
     private final @Nullable String name;
-    private final @NotNull Integer id;
+    private final @NonNull Integer id;
     private boolean isFinished = false;
 
     public Goal(
-            @NotNull Integer id,
+            @NonNull Integer id,
             @Nullable String name,
             boolean isFinished
     ) {
@@ -26,12 +25,12 @@ public class Goal implements Serializable {
         return name;
     }
 
-    @NotNull
+    @NonNull
     public Boolean isFinished() {
         return isFinished;
     }
 
-    @NotNull
+    @NonNull
     public Integer getId() {
         return id;
     }
