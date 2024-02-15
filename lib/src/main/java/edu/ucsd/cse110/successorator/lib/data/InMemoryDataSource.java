@@ -31,12 +31,13 @@ public class InMemoryDataSource {
     public InMemoryDataSource() {
     }
 
+    //test
     public final static List<Goal> DEFAULT_CARDS = List.of(
-        new Goal("Midterm Tomorrow", 0, false),
-        new Goal("Watering Plant", 1, false),
-        new Goal("Pay Tax", 2, false),
-        new Goal("Feed Pet", 3, false),
-        new Goal("Send Message", 4, false)
+        new Goal( 0, "Midterm Tomorrow",false),
+        new Goal(1,"Watering Plant", false),
+        new Goal(2,"Pay Tax", false),
+        new Goal(3,"Feed Pet", false),
+        new Goal(4,"Send Message", false)
     );
 
     public static InMemoryDataSource fromDefault() {

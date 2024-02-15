@@ -1,6 +1,8 @@
-package edu.ucsd.cse110.successorator.app.ui;
+package edu.ucsd.cse110.successorator.app;
 
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
+import androidx.lifecycle.viewmodel.ViewModelInitializer;
 
 import edu.ucsd.cse110.successorator.lib.domain.Goal;
 import edu.ucsd.cse110.successorator.lib.domain.GoalRepository;
@@ -8,6 +10,7 @@ import edu.ucsd.cse110.successorator.lib.util.MutableSubject;
 import edu.ucsd.cse110.successorator.lib.util.Subject;
 
 public class MainViewModel extends ViewModel {
+    public static ViewModelInitializer<?> initializer;
     // Domain state (true "Model" state)
 
     //implement save, remove, append, prepend
@@ -48,4 +51,6 @@ public class MainViewModel extends ViewModel {
         goalRepository.prepend(goal);
     }
 
+    public LiveData<Object> getOrderedGoal() {
+    }
 }
