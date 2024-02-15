@@ -1,65 +1,90 @@
 package edu.ucsd.cse110.successorator.app;
 
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
+import android.view.View;
+import android.widget.EditText;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.ViewModel;
-import androidx.lifecycle.ViewModelProvider;
-
-import java.io.Console;
-
 import edu.ucsd.cse110.successorator.app.databinding.ActivityMainBinding;
-//import edu.ucsd.cse110.successorator.app.ui..CardListFragment;
-//import edu.ucsd.cse110.successorator.app.ui.study.StudyFragment;
-//import edu.ucsd.cse110.successorator.lib.data.InMemoryDataSource;
-//import edu.ucsd.cse110.successorator.lib.domain.FlashcardRepository;
+import edu.ucsd.cse110.successorator.app.ui.goallist.GoalListAdapter;
+import edu.ucsd.cse110.successorator.lib.data.InMemoryDataSource;
+import edu.ucsd.cse110.successorator.lib.domain.Goal;
+import edu.ucsd.cse110.successorator.lib.domain.SimpleGoalRepository;
 
 public class MainActivity extends AppCompatActivity {
-    private ActivityMainBinding view;
-    private boolean isShowingStudy = true;
+    private ActivityMainBinding binding;
+    private GoalListAdapter unfinishedGoalsAdapter;
+    private GoalListAdapter finishedGoalsAdapter;
+    private SimpleGoalRepository goalRepository;
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setTitle(R.string.app_title);
+        binding = ActivityMainBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
 
-        this.view = ActivityMainBinding.inflate(getLayoutInflater());
-        setContentView(view.getRoot());
+        goalRepository = new SimpleGoalRepository(InMemoryDataSource.fromDefault());
+
+        // Initialize adapters
+        unfinishedGoalsAdapter = new GoalListAdapter(this, goalRepository.getUnfinishedGoals(), this::onUnfinishedGoalDelete);
+        finishedGoalsAdapter = new GoalListAdapter(this, goalRepository.getFinishedGoals(), this::onFinishedGoalDelete);
+
+        binding.unfinishedGoalsListView.setAdapter(unfinishedGoalsAdapter);
+        binding.finishedGoalsListView.setAdapter(finishedGoalsAdapter);
+
+        binding.addButton.setOnClickListener(v -> onAddGoal());
+        checkIfGoalsListIsEmpty();
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.action_bar, menu);
-        return true;
+    private void onAddGoal() {
+        final EditText input = new EditText(this);
+        new AlertDialog.Builder(this)
+                .setTitle("Add a New Goal")
+                .setView(input)
+                .setPositiveButton("OK", (dialog, which) -> {
+                    String goalTitle = input.getText().toString().trim();
+                    if (!goalTitle.isEmpty()) {
+                        Goal newGoal = new Goal(goalTitle, false);
+                        goalRepository.append(newGoal);
+                        updateGoalsList();
+                    }
+                })
+                .setNegativeButton("Cancel", null)
+                .show();
     }
 
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        var itemId = item.getItemId();
-
-        if (itemId == R.id.action_bar_menu_swap_views) {
-            swapFragments();
-        }
-
-        return super.onOptionsItemSelected(item);
+    private void onUnfinishedGoalDelete(int goalId) {
+        Goal goal = goalRepository.find(goalId).getValue();
+        goal.setFinished(true);
+        goalRepository.save(goal);
+        updateGoalsList();
     }
 
-    private void swapFragments() {
-        if (isShowingStudy) {
-            getSupportFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.fragment_container, CardListFragment.newInstance())
-                    .commit();
+    private void onFinishedGoalDelete(int goalId) {
+        Goal goal = goalRepository.find(goalId).getValue();
+        goal.setFinished(false);
+        goalRepository.prepend(goal);
+        updateGoalsList();
+    }
+
+    private void updateGoalsList() {
+        unfinishedGoalsAdapter.clear();
+        unfinishedGoalsAdapter.addAll(goalRepository.getUnfinishedGoals());
+        unfinishedGoalsAdapter.notifyDataSetChanged();
+
+        finishedGoalsAdapter.clear();
+        finishedGoalsAdapter.addAll(goalRepository.getFinishedGoals());
+        finishedGoalsAdapter.notifyDataSetChanged();
+
+        checkIfGoalsListIsEmpty();
+    }
+
+    private void checkIfGoalsListIsEmpty() {
+        if (unfinishedGoalsAdapter.isEmpty()) {
+            binding.noGoalsText.setVisibility(View.VISIBLE);
+            binding.noGoalsText.setText("No goals for the Day. Click the '+' at the upper right to enter your Most Important Thing.");
         } else {
-            getSupportFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.fragment_container, StudyFragment.newInstance())
-                    .commit();
+            binding.noGoalsText.setVisibility(View.GONE);
         }
-        isShowingStudy = !isShowingStudy;
     }
 }

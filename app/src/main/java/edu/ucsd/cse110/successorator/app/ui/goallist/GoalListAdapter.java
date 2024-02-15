@@ -12,7 +12,7 @@ import androidx.core.util.Consumer;
 import java.util.ArrayList;
 import java.util.List;
 
-import edu.ucsd.cse110.successorator.app.databinding.FragmentCardListBinding;
+import edu.ucsd.cse110.successorator.app.databinding.FragmentGoalListBinding;
 import edu.ucsd.cse110.successorator.lib.domain.Goal;
 
 public class GoalListAdapter extends ArrayAdapter<Goal> {
@@ -36,14 +36,14 @@ public class GoalListAdapter extends ArrayAdapter<Goal> {
         assert goal != null;
 
         // Check if a view is being reused...
-        FragmentCardListBinding binding;
+        FragmentGoalListBinding binding;
         if (convertView != null) {
             // if so, bind to it
-            binding = FragmentCardListBinding.bind(convertView);
+            binding = FragmentGoalListBinding.bind(convertView);
         } else {
             // otherwise inflate a new view from our layout XML.
             var layoutInflater = LayoutInflater.from(getContext());
-            binding = FragmentCardListBinding.inflate(layoutInflater, parent, false);
+            binding = FragmentGoalListBinding.inflate(layoutInflater, parent, false);
         }
 
         // Populate the view with the goal's data.

@@ -49,11 +49,11 @@ public class GoalListFragment extends Fragment {
             var dialogFragment = ConfirmDeleteCardDialogFragment.newInstance(id);
             dialogFragment.show(getParentFragmentManager(), "ConfirmDeleteGoalDialogFragment");
         });
-        activityModel.getOrderedGoal().observe(cards -> {
-            if (cards == null) return;
-            adapter.clear();
-            adapter.addAll(new ArrayList<>(goals)); // remember the mutable copy here!
-            adapter.notifyDataSetChanged();
+           activityModel.getOrderedGoal().observe(goals -> {
+                if (goals == null) return;
+                adapter.clear();
+                adapter.addAll(new ArrayList<>(goals)); // remember the mutable copy here!
+                adapter.notifyDataSetChanged();
         });
     }
 
