@@ -49,4 +49,12 @@ public class SimpleGoalRepository implements GoalRepository {
                 goal.withSortOrder(dataSource.getMinSortOrder() - 1)
         );
     }
+
+    public Goal getUnfinishedGoals() {
+        return dataSource.getUnfinishedGoals();
+    }
+
+    public Goal getFinishedGoals() {
+        return dataSource.getFinishedGoals();
+    }
 }

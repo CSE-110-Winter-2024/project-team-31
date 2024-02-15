@@ -55,14 +55,15 @@ public class MainActivity extends AppCompatActivity {
 
     private void onUnfinishedGoalDelete(int goalId) {
         Goal goal = goalRepository.find(goalId).getValue();
-        goal.setFinished(true);
+        assert goal != null;
+        goal.isFinished = true;
         goalRepository.save(goal);
         updateGoalsList();
     }
 
     private void onFinishedGoalDelete(int goalId) {
         Goal goal = goalRepository.find(goalId).getValue();
-        goal.setFinished(false);
+        goal.isFinished = false;
         goalRepository.prepend(goal);
         updateGoalsList();
     }

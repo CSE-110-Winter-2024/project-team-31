@@ -182,4 +182,18 @@ public class InMemoryDataSource {
         assert sortOrders.stream().allMatch(i -> i >= minSortOrder);
         assert sortOrders.stream().allMatch(i -> i <= maxSortOrder);
     }
+
+    public Goal getUnfinishedGoals() {
+        return goals.values().stream()
+                .filter(goal -> !goal.isFinished())
+                .findFirst()
+                .orElse(null);
+    }
+
+    public Goal getFinishedGoals() {
+        return goals.values().stream()
+                .filter(goal -> goal.isFinished())
+                .findFirst()
+                .orElse(null);
+    }
 }

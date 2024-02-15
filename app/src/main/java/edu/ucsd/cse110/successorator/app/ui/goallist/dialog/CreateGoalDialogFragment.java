@@ -32,8 +32,8 @@ public class CreateGoalDialogFragment extends DialogFragment {
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
         this.view = FragmentDialogCreateGoalBinding.inflate(getLayoutInflater());
         return new AlertDialog.Builder(getActivity())
-                .setTitle("New Card")
-                .setMessage("Please provide the new card text.")
+                .setTitle("New goal")
+                .setMessage("Please enter the goal.")
                 .setView(view.getRoot())
                 .setPositiveButton("Create", this::onPositiveButtonClick)
                 .setNegativeButton("Cancel", this::onNegativeButtonClick)
@@ -44,7 +44,7 @@ public class CreateGoalDialogFragment extends DialogFragment {
         var text = view.editText.getText().toString();
 
 // sort order is an invalid value here, because append/prepend will replace it.
-        var goal = new Goal(null, text, false);
+        var goal = new Goal(null, text, false, -1);
 
         if (view.appendRadioButton.isChecked()) {
             activityModel.append(goal);

@@ -9,7 +9,7 @@ import java.util.Objects;
 public class Goal implements Serializable {
     private final @Nullable String name;
     private final @NonNull Integer id;
-    private boolean isFinished;
+    public boolean isFinished;
     private int sortOrder;
 
     public Goal(
