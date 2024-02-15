@@ -11,7 +11,7 @@ import edu.ucsd.cse110.successorator.lib.util.SimpleSubject;
 import edu.ucsd.cse110.successorator.lib.util.Subject;
 
 /**
- * Class used as a sort of "database" of decks and flashcards that exist. This
+ * Class used as a sort of "database" of list and goals that exist. This
  * will be replaced with a real database in the future, but can also be used
  * for testing.
  */
@@ -32,11 +32,11 @@ public class InMemoryDataSource {
     }
 
     public final static List<Goal> DEFAULT_CARDS = List.of(
-        new Goal("Midterm Tomorrow", 0, false),
-        new Goal("Watering Plant", 1, false),
-        new Goal("Pay Tax", 2, false),
-        new Goal("Feed Pet", 3, false),
-        new Goal("Send Message", 4, false)
+        new Goal(0, "Midterm Tomorrow", false, 0),
+        new Goal(1, "Watering Plant", false, 1),
+        new Goal(2, "Pay Tax", false, 2),
+        new Goal(3, "Feed Pet", false, 3),
+        new Goal(4, "Send Message", false, 4)
     );
 
     public static InMemoryDataSource fromDefault() {
@@ -106,10 +106,10 @@ public class InMemoryDataSource {
 
     public void removeGoal(int id) {
         var card = goals.get(id);
-        //var sortOrder = card.sortOrder();
+        var sortOrder = card.sortOrder();
 
         goals.remove(id);
-        //shiftSortOrders(sortOrder, maxSortOrder, -1);
+        shiftSortOrders(sortOrder, maxSortOrder, -1);
 
         if (goalSubjects.containsKey(id)) {
             goalSubjects.get(id).setValue(null);
@@ -119,12 +119,12 @@ public class InMemoryDataSource {
 
 
     public void shiftSortOrders(int from, int to, int by) {
-        //var cards = goals.values().stream()
-        //    .filter(card -> card.sortOrder() >= from && card.sortOrder() <= to)
-        //    .map(card -> card.withSortOrder(card.sortOrder() + by))
-        //    .collect(Collectors.toList());
+        var cards = goals.values().stream()
+            .filter(card -> card.sortOrder() >= from && card.sortOrder() <= to)
+            .map(card -> card.withSortOrder(card.sortOrder() + by))
+            .collect(Collectors.toList());
 
-        //putGoals(cards);
+        putGoals(cards);
     }
 
     /**
@@ -148,15 +148,15 @@ public class InMemoryDataSource {
      */
     private void postInsert() {
         // Keep the min and max sort orders up to date.
-        //minSortOrder = goals.values().stream()
-        //    .map(Goal::sortOrder)
-        //    .min(Integer::compareTo)
-        //    .orElse(Integer.MAX_VALUE);
+        minSortOrder = goals.values().stream()
+            .map(Goal::sortOrder)
+            .min(Integer::compareTo)
+            .orElse(Integer.MAX_VALUE);
 
-        //maxSortOrder = goals.values().stream()
-        //   .map(Goal::sortOrder)
-        //    .max(Integer::compareTo)
-        //     .orElse(Integer.MIN_VALUE);
+        maxSortOrder = goals.values().stream()
+           .map(Goal::sortOrder)
+            .max(Integer::compareTo)
+             .orElse(Integer.MIN_VALUE);
     }
 
     /**
@@ -168,18 +168,18 @@ public class InMemoryDataSource {
      */
     private void assertSortOrderConstraints() {
         // Get all the sort orders...
-        //var sortOrders = goals.values().stream()
-        //    .map(Goal::sortOrder)
-        //    .collect(Collectors.toList());
+        var sortOrders = goals.values().stream()
+            .map(Goal::sortOrder)
+            .collect(Collectors.toList());
 
-        // Non-negative...
-        //assert sortOrders.stream().allMatch(i -> i >= 0);
+        //Non-negative...
+        assert sortOrders.stream().allMatch(i -> i >= 0);
 
         // Unique...
-        //assert sortOrders.size() == sortOrders.stream().distinct().count();
+        assert sortOrders.size() == sortOrders.stream().distinct().count();
 
         // Between min and max...
-        //assert sortOrders.stream().allMatch(i -> i >= minSortOrder);
-        //assert sortOrders.stream().allMatch(i -> i <= maxSortOrder);
+        assert sortOrders.stream().allMatch(i -> i >= minSortOrder);
+        assert sortOrders.stream().allMatch(i -> i <= maxSortOrder);
     }
 }

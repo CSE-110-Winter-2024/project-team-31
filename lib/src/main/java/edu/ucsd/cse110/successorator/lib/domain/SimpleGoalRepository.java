@@ -37,16 +37,16 @@ public class SimpleGoalRepository implements GoalRepository {
         dataSource.removeGoal(id);
     }
     @Override
-    public void append(Goal flashcard){
-        //dataSource.putGoal(
-        //        flashcard.withSortOrder(dataSource.getMaxSortOrder()+1)
-        //);
+    public void append(Goal goal){
+        dataSource.putGoal(
+                goal.withSortOrder(dataSource.getMaxSortOrder()+1)
+        );
     }
     @Override
-    public void prepend(Goal flashcard){
+    public void prepend(Goal goal){
         dataSource.shiftSortOrders(0, dataSource.getMaxSortOrder(), 1);
-        //dataSource.putGoal(
-        //        flashcard.withSortOrder(dataSource.getMinSortOrder() - 1)
-        //);
+        dataSource.putGoal(
+                goal.withSortOrder(dataSource.getMinSortOrder() - 1)
+        );
     }
 }
