@@ -6,13 +6,13 @@
     android:layout_height="96dp">
 
     <TextView
-        android:id="@+id/card_task"
+        android:id="@+id/unfinishedgoal"
         android:layout_width="308dp"
         android:layout_height="46dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="32dp"
         android:layout_marginEnd="16dp"
-        android:text="card_task"
+        android:text="unfinishedgoal"
         android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toStartOf="@+id/card_delete_button"
@@ -29,7 +29,7 @@
         android:src="@drawable/ic_cross"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/card_task"
+        app:layout_constraintStart_toEndOf="@+id/unfinishedgoal"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.666"
         app:tint="?android:attr/textColorSecondary" />

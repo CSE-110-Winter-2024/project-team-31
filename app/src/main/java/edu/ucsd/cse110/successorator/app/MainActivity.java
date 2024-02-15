@@ -17,6 +17,7 @@ public class MainActivity extends AppCompatActivity {
     private GoalListAdapter finishedGoalsAdapter;
     private SimpleGoalRepository goalRepository;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
