@@ -9,8 +9,9 @@ import java.util.Objects;
 public class Goal implements Serializable {
     private final @Nullable String name;
     private final @NonNull Integer id;
-    private final boolean isFinished;
-    private final int sortOrder;
+    private boolean isFinished;
+    private int sortOrder;
+
     public Goal(
             @NonNull Integer id,
             @Nullable String name,
@@ -49,6 +50,8 @@ public class Goal implements Serializable {
     public Goal withSortOrder(int sortOrder) {
         return new Goal(id, name, isFinished, sortOrder);
     }
+
+    public void setIsFinished(Boolean isFinished) { this.isFinished = isFinished; }
 
     @Override
     public int hashCode() {

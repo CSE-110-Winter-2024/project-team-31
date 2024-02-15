@@ -34,6 +34,15 @@ public class GoalTest {
     }
 
     @Test
+    public void testSetter() {
+        Boolean expected = true;
+        testGoal1.setIsFinished(true);
+        Boolean actual = testGoal1.isFinished();
+
+        assertEquals(expected, actual);
+    }
+
+    @Test
     public void testSortOrder() {
         int expected = 0;
         int actual = testGoal1.sortOrder();
