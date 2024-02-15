@@ -6,7 +6,7 @@ import android.widget.EditText;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import edu.ucsd.cse110.successorator.app.databinding.ActivityMainBinding;
-import edu.ucsd.cse110.successorator.app.ui.goallist.GoalListAdapter;
+
 import edu.ucsd.cse110.successorator.lib.data.InMemoryDataSource;
 import edu.ucsd.cse110.successorator.lib.domain.Goal;
 import edu.ucsd.cse110.successorator.lib.domain.SimpleGoalRepository;
@@ -21,6 +21,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
@@ -45,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
                 .setPositiveButton("OK", (dialog, which) -> {
                     String goalTitle = input.getText().toString().trim();
                     if (!goalTitle.isEmpty()) {
-                        Goal newGoal = new Goal(goalTitle, false);
+                        Goal newGoal = new Goal(null, goalTitle, false, -1);
                         goalRepository.append(newGoal);
                         updateGoalsList();
                     }
