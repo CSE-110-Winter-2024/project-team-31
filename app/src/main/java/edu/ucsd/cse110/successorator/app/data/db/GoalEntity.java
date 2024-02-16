@@ -19,18 +19,23 @@ public class GoalEntity {
     @ColumnInfo(name = "isFinished")
     public Boolean isFinished;
 
+    @ColumnInfo(name = "sortOrder")
+    public int sortOrder;
 
-    GoalEntity(@NonNull String name) {
+
+    GoalEntity(@NonNull String name, Boolean isFinished, int sortOrder) {
         this.name = name;
+        this.isFinished = isFinished;
+        this.sortOrder = sortOrder;
     }
 
     public static GoalEntity fromGoal(@NonNull Goal goal) {
-        var card = new GoalEntity(goal.getName());
+        var card = new GoalEntity(goal.getName(), goal.isFinished(), goal.sortOrder());
         card.id = goal.getId();
         return card;
     }
 
     public @NonNull Goal toGoal() {
-        return new Goal(id, name, isFinished);
+        return new Goal(id, name, isFinished, sortOrder);
     }
 }
