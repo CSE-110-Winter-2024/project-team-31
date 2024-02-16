@@ -7,7 +7,7 @@ import androidx.room.PrimaryKey;
 import edu.ucsd.cse110.successorator.lib.domain.Goal;
 
 @Entity(tableName = "flashcards")
-public class FlashcardEntity {
+public class GoalEntity {
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id")
     public Integer id = null;
@@ -21,14 +21,14 @@ public class FlashcardEntity {
     @ColumnInfo(name = "sort_order")
     public int sortOrder;
 
-    FlashcardEntity(@NonNull String front, int sortOrder) {
+    GoalEntity(@NonNull String front, int sortOrder) {
         this.front = front;
         this.back = back;
         this.sortOrder = sortOrder;
     }
 
-    public static FlashcardEntity fromFlashcard(@NonNull Goal goal) {
-        var card = new FlashcardEntity(goal.name(), goal.sortOrder());
+    public static GoalEntity fromFlashcard(@NonNull Goal goal) {
+        var card = new GoalEntity(goal.name(), goal.sortOrder());
         card.id = goal.id();
         return card;
     }

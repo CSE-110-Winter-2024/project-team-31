@@ -11,16 +11,16 @@ import edu.ucsd.cse110.successorator.lib.domain.GoalRepository;
 import edu.ucsd.cse110.successorator.lib.util.Subject;
 
 public class RoomGoalRepository implements GoalRepository {
-    private final FlashcardDao flashcardDao;
+    private final GoalDao flashcardDao;
 
-    public RoomGoalRepository(FlashcardDao flashcardDao) {
+    public RoomGoalRepository(GoalDao flashcardDao) {
         this.flashcardDao = flashcardDao;
     }
 
     @Override
     public Subject<Goal> find(int id) {
         var entityLiveData = flashcardDao.findAsLiveData(id);
-        var flashcardLiveData = Transformations.map(entityLiveData, FlashcardEntity::toFlashcard);
+        var flashcardLiveData = Transformations.map(entityLiveData, GoalEntity::toFlashcard);
         return new LiveDataSubjectAdapter<>(flashcardLiveData);
     }
 
@@ -29,7 +29,7 @@ public class RoomGoalRepository implements GoalRepository {
         var entitiesLiveData = flashcardDao.findAllAsLiveData();
         var flashcardsLiveData = Transformations.map(entitiesLiveData, entities -> {
             return entities.stream()
-                    .map(FlashcardEntity::toFlashcard)
+                    .map(GoalEntity::toFlashcard)
                     .collect(Collectors.toList());
         });
         return new LiveDataSubjectAdapter<>(flashcardsLiveData);
@@ -37,13 +37,13 @@ public class RoomGoalRepository implements GoalRepository {
 
     @Override
     public void save(Goal goal) {
-        flashcardDao.insert(FlashcardEntity.fromFlashcard(goal));
+        flashcardDao.insert(GoalEntity.fromFlashcard(goal));
     }
 
     @Override
     public void save(List<Goal> goals) {
         var entities = goals.stream()
-                .map(FlashcardEntity::fromFlashcard)
+                .map(GoalEntity::fromFlashcard)
                 .collect(Collectors.toList());
         flashcardDao.insert(entities);
 
@@ -56,11 +56,11 @@ public class RoomGoalRepository implements GoalRepository {
 
     @Override
     public void append(Goal goal) {
-        flashcardDao.append(FlashcardEntity.fromFlashcard(goal));
+        flashcardDao.append(GoalEntity.fromFlashcard(goal));
     }
 
     @Override
     public void prepend(Goal goal) {
-        flashcardDao.prepend(FlashcardEntity.fromFlashcard(goal));
+        flashcardDao.prepend(GoalEntity.fromFlashcard(goal));
     }
 }
