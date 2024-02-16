@@ -9,7 +9,7 @@ import edu.ucsd.cse110.successorator.app.data.db.SECardsDatabase;
 import edu.ucsd.cse110.successorator.lib.data.InMemoryDataSource;
 import edu.ucsd.cse110.successorator.lib.domain.GoalRepository;
 
-public class SECardsApplication extends Application {
+public class SuccessoratorApplication extends Application {
     private InMemoryDataSource dataSource;
     private GoalRepository goalRepository;
 

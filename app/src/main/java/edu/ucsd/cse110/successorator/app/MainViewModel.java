@@ -29,7 +29,7 @@ public class MainViewModel extends ViewModel {
         new ViewModelInitializer<>(
             MainViewModel.class,
             creationExtras -> {
-                var app = (SECardsApplication) creationExtras.get(APPLICATION_KEY);
+                var app = (SuccessoratorApplication) creationExtras.get(APPLICATION_KEY);
                 assert app != null;
                 return new MainViewModel(app.getFlashcardRepository());
             });
